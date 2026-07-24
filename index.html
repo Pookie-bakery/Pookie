@@ -727,24 +727,9 @@
           <span>التحويل البنكي يغطي قيمة القرانولا فقط. أما رسوم التوصيل فيتم الاتفاق عليها وتحصيلها مباشرة عبر واتساب.</span>
         </div>
 
-        <div class="field" style="margin-top:14px;">
-          <label for="custReceipt">إرفاق صورة إيصال التحويل</label>
-          <div class="receipt-upload" id="receiptUploadBox">
-            <div class="receipt-upload-icon" id="receiptUploadIcon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            </div>
-            <div class="receipt-upload-text">
-              <strong id="receiptUploadLabel">اضغطي هنا لإرفاق صورة الإيصال</strong>
-              <span>JPG أو PNG — بعد الإرسال أرفقي نفس الصورة في محادثة واتساب</span>
-            </div>
-            <input type="file" id="custReceipt" accept="image/*" required>
-          </div>
-          <span class="field-error-msg">يرجى إرفاق صورة إيصال التحويل قبل إرسال الطلب</span>
-        </div>
-
         <div class="notice-box">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
-          <span>لن يتم اعتماد الطلب أو البدء في تجهيزه إلا بعد تحويل قيمة الطلب كاملة وإرفاق إيصال التحويل البنكي والتحقق منه من قبل إدارة Pookie Bakery.</span>
+          <span>لن يتم اعتماد الطلب أو البدء في تجهيزه إلا بعد تحويل قيمة الطلب كاملة ثم إرسال إيصال التحويل في محادثة واتساب للتحقق منه من قبل إدارة Pookie Bakery.</span>
         </div>
       </div>
 
@@ -1025,10 +1010,6 @@
   var agreeCheck = document.getElementById('agreeCheck');
   var orderNumberBadge = document.getElementById('orderNumberBadge');
   var paymentAmountDueEl = document.getElementById('paymentAmountDue');
-  var custReceiptInput = document.getElementById('custReceipt');
-  var receiptUploadBox = document.getElementById('receiptUploadBox');
-  var receiptUploadIcon = document.getElementById('receiptUploadIcon');
-  var receiptUploadLabel = document.getElementById('receiptUploadLabel');
 
   function openCheckout(){
     if(cart.length === 0) return;
@@ -1100,23 +1081,6 @@
   });
 
   // Receipt image upload feedback
-  custReceiptInput.addEventListener('change', function(){
-    var file = custReceiptInput.files && custReceiptInput.files[0];
-    clearFieldError(custReceiptInput.closest('.field'));
-    if(!file){
-      receiptUploadBox.classList.remove('has-file');
-      receiptUploadLabel.textContent = 'اضغطي هنا لإرفاق صورة الإيصال';
-      receiptUploadIcon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
-      return;
-    }
-    receiptUploadBox.classList.add('has-file');
-    receiptUploadLabel.textContent = file.name;
-    var reader = new FileReader();
-    reader.onload = function(ev){
-      receiptUploadIcon.innerHTML = '<img class="receipt-preview" src="'+ev.target.result+'" alt="معاينة الإيصال">';
-    };
-    reader.readAsDataURL(file);
-  });
 
   // Copy buttons
   document.querySelectorAll('.copy-btn').forEach(function(btn){
@@ -1210,13 +1174,6 @@
       });
     }
 
-    var receiptField = custReceiptInput.closest('.field');
-    clearFieldError(receiptField);
-    if(!custReceiptInput.files || !custReceiptInput.files[0]){
-      showFieldError(receiptField);
-      firstInvalid = firstInvalid || custReceiptInput;
-    }
-
     if(!agreeCheck.checked){
       firstInvalid = firstInvalid || agreeCheck;
     }
@@ -1273,8 +1230,8 @@
     }
     lines.push('——————————————');
     lines.push(' مبلغ التحويل البنكي (القرانولا فقط): ' + sub + ' ريال');
-    lines.push(' تم إرفاق صورة إيصال التحويل في الموقع، وسيتم إرسالها أيضًا هنا في المحادثة.');
-
+lines.push(' يرجى إرسال صورة إيصال التحويل في هذه المحادثة لإكمال اعتماد الطلب.');
+    
     var message = encodeURIComponent(lines.join('\n'));
     window.open('https://wa.me/' + ORDER_WHATSAPP + '?text=' + message, '_blank');
 
