@@ -1245,34 +1245,35 @@
     var orderNumber = orderState.orderNumber;
 
     var lines = [];
-    lines.push('🌾 طلب جديد من Pookie Bakery 🌾');
+    lines.push(' ⋆ ˚｡⋆୨୧˚
+ طلب جديد من Pookie Bakery ');
     lines.push('رقم الطلب: ' + orderNumber);
     lines.push('——————————————');
-    lines.push('👤 الاسم: ' + name);
-    lines.push('📱 الجوال: ' + phone);
-    lines.push('🌾 حساسية: ' + (allergy ? allergy : 'لا يوجد'));
+    lines.push(' الاسم: ' + name);
+    lines.push(' الجوال: ' + phone);
+    lines.push(' حساسية: ' + (allergy ? allergy : 'لا يوجد'));
     lines.push('');
-    lines.push('🧺 المنتجات:');
+    lines.push(' المنتجات:');
     cart.forEach(function(item){
       lines.push('• ' + item.nameAr + ' (' + item.weight + ') × ' + item.qty + ' = ' + (item.price*item.qty) + ' ريال');
     });
     lines.push('——————————————');
-    lines.push('🚚 طريقة الاستلام: ' + (isDelivery ? 'توصيل' : 'استلام من الموقع (تبوك)'));
+    lines.push(' طريقة الاستلام: ' + (isDelivery ? 'توصيل' : 'استلام من الموقع (تبوك)'));
     if(isDelivery){
       var city = document.getElementById('custCity').value.trim();
       var district = document.getElementById('custDistrict').value.trim();
       var street = document.getElementById('custStreet').value.trim();
       var house = document.getElementById('custHouse').value.trim();
-      lines.push('📍 العنوان: ' + city + ' - ' + district + ' - ' + street + ' - منزل ' + house);
-      lines.push('🚛 رسوم التوصيل: يُتفق عليها وتُحصّل مباشرة عبر واتساب (لا تدخل ضمن مبلغ التحويل البنكي)');
+      lines.push(' العنوان: ' + city + ' - ' + district + ' - ' + street + ' - منزل ' + house);
+      lines.push(' رسوم التوصيل: يُتفق عليها وتُحصّل مباشرة عبر واتساب (لا تدخل ضمن مبلغ التحويل البنكي)');
     }
     if(notes){
       lines.push('');
-      lines.push('📝 ملاحظات: ' + notes);
+      lines.push(' ملاحظات: ' + notes);
     }
     lines.push('——————————————');
-    lines.push('💰 مبلغ التحويل البنكي (القرانولا فقط): ' + sub + ' ريال');
-    lines.push('🧾 تم إرفاق صورة إيصال التحويل في الموقع، وسيتم إرسالها أيضًا هنا في المحادثة.');
+    lines.push(' مبلغ التحويل البنكي (القرانولا فقط): ' + sub + ' ريال');
+    lines.push(' تم إرفاق صورة إيصال التحويل في الموقع، وسيتم إرسالها أيضًا هنا في المحادثة.');
 
     var message = encodeURIComponent(lines.join('\n'));
     window.open('https://wa.me/' + ORDER_WHATSAPP + '?text=' + message, '_blank');
